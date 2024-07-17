@@ -14,6 +14,8 @@ app.use('/dashboard', dashbRoutes)
 app.use('/todos', todoRoutes)
 app.use('/users', userRoutes )
 
-app.listen(5000, () =>{
+const Port = process.env.Port || 8080;
+
+app.listen(Port, () =>{
     console.log(`Server has started on http://localhost:5000`)
 })
