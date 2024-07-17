@@ -9,6 +9,9 @@ const userRoutes = require("./Server/main/userRoutes")
 //middleware 
 app.use(cors());
 app.use(express.json());
+app.get("/", (req,res)=>{
+    res.send('Backend is working properly')
+})
 app.use('/auth', authRoutes)
 app.use('/dashboard', dashbRoutes)
 app.use('/todos', todoRoutes)
