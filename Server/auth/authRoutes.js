@@ -27,7 +27,7 @@ router.post("/register", validator, async (req,res)=>{
         const token = jwtGenerator(newUser.rows[0].id, "user");
         res.json({token});
     } catch (error) {
-        res.status(500).send("Internal Server Error")
+        res.status(500).send(error.message)
     }
 })
 
