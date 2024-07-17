@@ -20,10 +20,11 @@ router.post("/register", validator, async (req,res)=>{
         const salt = await bcrypt.genSalt(10);
         const bcryptPass = await bcrypt.hash(password, salt);
 
+        const newUser = await pool.query("INSERT INTO account (name, email, password, role) VALUES($1, $2, $3, $4) RETURNING *", [name, email, bcryptPass, "user"]);
+        
         const newUserTable = `table_${newUser.rows[0].id}`
         await pool.query(`CREATE TABLE ${newUserTable} (todo_id SERIAL PRIMARY KEY, todo_desc VARCHAR(255) NOT NULL)`)
         
-        const newUser = await pool.query("INSERT INTO account (name, email, password, role) VALUES($1, $2, $3, $4) RETURNING *", [name, email, bcryptPass, "user"]);
         const token = jwtGenerator(newUser.rows[0].id, "user");
         res.json({token});
     } catch (error) {
